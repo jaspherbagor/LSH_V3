@@ -18,7 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('accommodation_id');
             $table->integer('rate');
-            $table->text('review');
+            $table->text('review_heading');
+            $table->text('review_description');
             $table->timestamps();
 
             // Define foreign key constraints
