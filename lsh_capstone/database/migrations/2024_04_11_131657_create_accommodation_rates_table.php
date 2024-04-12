@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('accommodation_id');
-            $table->decimal('rate', 3, 1); // Allow one digit before the decimal and one digit after
+            $table->integer('rate');
+            $table->text('review');
             $table->timestamps();
 
             // Define foreign key constraints
