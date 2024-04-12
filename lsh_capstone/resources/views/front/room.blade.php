@@ -77,7 +77,7 @@
         </div>
     </div>
     
-    <div class="container bg-danger py-5 mb-4">
+    <div class="container py-5 mb-4">
         <h2 class="text-center mb-5">HAPPY CUSTOMERS</h2>
         <div class="container">
             <div class="row">
