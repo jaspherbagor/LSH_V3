@@ -78,7 +78,7 @@
     </div>
     
     <div class="container py-5 mb-4">
-        <h2 class="text-center mb-5">HAPPY CUSTOMERS</h2>
+        <h2 class="text-center">CUSTOMERS REVIEW</h2>
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-12">
