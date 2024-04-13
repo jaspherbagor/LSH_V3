@@ -82,7 +82,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-12">
-                    <div class="card" style="width: 18rem;">
+                    <div class="card bg-secondary" style="width: 18rem;">
                         <div class="card-body">
                             
                             <h5 class="card-title mb-3">Awesome! Excellent! Amazing!</h5>
