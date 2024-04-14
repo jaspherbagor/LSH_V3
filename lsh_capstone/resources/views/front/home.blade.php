@@ -135,6 +135,10 @@
         <div class="row">
 
             @foreach($room_all as $item)
+            @php
+                $accommodation = \App\Models\Accommodation::where('id', $item->accommodation_id)->first();
+                $accommodation_type = \App\Models\AccommodationType::where('id',$accommodation->accommodation_type_id)->first();
+            @endphp
             <div class="col-md-3">
                 <div class="inner">
                     <div class="card home-card">
@@ -145,11 +149,12 @@
                             <h2>
                                 <a href="{{ route('room_detail',$item->id) }}">{{ $item->room_name }}</a>
                             </h2>
+                            <p class="my-3">
+                                <a href="{{ route('room', $accommodation->id) }}" class="text-secondary fw-semibold">
+                                    {{ $accommodation->name }}
+                                </a>
+                            </p>
                             <div class="price">
-                                @php
-                                    $accommodation = \App\Models\Accommodation::where('id', $item->accommodation_id)->first();
-                                    $accommodation_type = \App\Models\AccommodationType::where('id',$accommodation->accommodation_type_id)->first();
-                                @endphp
                                 @if($accommodation_type->name != 'Hotel')
                                 ₱{{ $item->price }} per month
                                 @else
