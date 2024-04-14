@@ -7,9 +7,6 @@
                 </ul>
             </form>
             <ul class="navbar-nav navbar-right">
-                <li class="nav-link">
-                    <a href="{{ route('home') }}" target="_blank" class="btn btn-secondary text-dark">Visit Website</a>
-                </li>
                 <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
 
                     @if(Auth::guard('customer')->user()->photo == '')
@@ -20,9 +17,6 @@
                     
                     <div class="d-sm-none d-lg-inline-block">{{ Auth::guard('customer')->user()->name }}</div></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{{ route('customer_profile') }}" class="dropdown-item has-icon">
-                            <i class="fa fa-user"></i> Edit Profile
-                        </a>
                         <a href="{{ route('customer_logout') }}" class="dropdown-item has-icon text-danger">
                             <i class="fa fa-sign-out"></i> Logout
                         </a>
