@@ -15,6 +15,8 @@
 
             <li class="{{ Request::is('customer/order/view') ? 'active' : '' }}"><a class="nav-link" href="{{ route('customer_order_view') }}"><i class="fa fa-list-alt"></i> <span>Orders</span></a></li>
 
+            <li><a class="nav-link" href="{{ route('home') }}"><i class="fa fa-home" aria-hidden="true"></i> <span>Visit Website</span></a></li>
+
 
             {{-- <li class="nav-item dropdown {{ Request::is('admin/amenity/view') || Request::is('admin/room/view') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown"><i class="fa fa-building-o"></i><span>Room Section</span></a>
