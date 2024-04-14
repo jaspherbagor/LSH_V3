@@ -78,11 +78,11 @@
     </div>
     
     <div class="container py-5 mb-4">
-        <h2 class="text-center">CUSTOMERS REVIEW</h2>
+        <h2 class="text-center mb-5">CUSTOMERS REVIEW</h2>
         <div class="container">
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-12">
-                    <div class="card bg-danger" style="width: 18rem;">
+                    <div class="card testimonial-card" style="width: 18rem;">
                         <div class="card-body">
                             
                             <h5 class="card-title mb-3">Awesome! Excellent! Amazing!</h5>
@@ -94,7 +94,7 @@
                                 <i class="fa fa-star text-warning fs-5" aria-hidden="true"></i>
                             </div>
                             <img src="{{ asset('/uploads/user.jpg') }}" alt="" class="w-25 img-fluid rounded-circle">
-                            <p class="card-text mt-3">I really love the services offered at Bayangan Hotel and Beach Resort. I really enjoy my stay at Labason. </p>
+                            <p class="card-text mt-3 fst-italic">" I really love the services offered at Bayangan Hotel and Beach Resort. I really enjoy my stay at Labason. "</p>
                             <h6 class="card-subtitle mb-2 text-muted">- John Doe</h6>
                         </div>
                     </div>
