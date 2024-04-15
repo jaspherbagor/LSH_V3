@@ -100,7 +100,7 @@
                         $accommodation = \App\Models\Accommodation::where('id', $room->accommodation_id)->first();
                         $accommodation_type = \App\Models\AccommodationType::where('id',$accommodation->accommodation_type_id)->first();
                         @endphp
-                        @if($accommodation_type->name != 'Hotel')\
+                        @if($accommodation_type->name != 'Hotel')
                         <h2>Room Price per Month</h2>
                         @else 
                         <h2>Room Price per Night</h2>
