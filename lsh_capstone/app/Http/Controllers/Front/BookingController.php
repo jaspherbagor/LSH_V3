@@ -302,7 +302,7 @@ class BookingController extends Controller
 
             $r_info = Room::where('id',$arr_cart_room_id[$i])->first();
 
-            $message .= '<br><strong>Room Name</strong>: '.$r_info->name;
+            $message .= '<br><strong>Room Name</strong>: '.$r_info->room_name;
             $message .= '<br><strong>Price Per Night</strong>: ₱'.number_format($r_info->price, 2);
             $message .= '<br><strong>Checkin Date</strong>: '.$arr_cart_checkin_date[$i];
             $message .= '<br><strong>Checkout Date</strong>: '.$arr_cart_checkout_date[$i];

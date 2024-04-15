@@ -185,7 +185,7 @@
 
                                     <tr>
                                         <td>
-                                            {{ $room_data->name }}
+                                            {{ $room_data->room_name }}
                                             <br>
                                             ({{ $arr_cart_checkin_date[$i] }} - {{ $arr_cart_checkout_date[$i] }})
                                             <br>

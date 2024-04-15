@@ -66,7 +66,7 @@
                             @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $room_data->name }}</td>
+                                <td>{{ $room_data->room_name }}</td>
                                 <td class="text-center">{{ $item->checkin_date }}</td>
                                 <td class="text-center">{{ $item->checkout_date }}</td>
                                 <td class="text-center">{{ $item->adult }}</td>
