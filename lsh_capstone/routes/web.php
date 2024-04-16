@@ -24,6 +24,7 @@ use App\Http\Controllers\Customer\CustomerAuthController;
 use App\Http\Controllers\Customer\CustomerHomeController;
 use App\Http\Controllers\Customer\CustomerOrderController;
 use App\Http\Controllers\Customer\CustomerProfileController;
+use App\Http\Controllers\Customer\CustomerReviewController;
 use App\Http\Controllers\Front\AboutController;
 use App\Http\Controllers\Front\AccommodationController;
 use App\Http\Controllers\Front\BlogController;
@@ -120,6 +121,10 @@ Route::group(['middleware' => ['customer:customer']], function() {
     Route::post('/customer/edit-profile-submit', [CustomerProfileController::class, 'profile_submit'])->name('customer_profile_submit');
     Route::get('/customer/order/view', [CustomerOrderController::class, 'index'])->name('customer_order_view');
     Route::get('/customer/invoice/{id}', [CustomerOrderController::class, 'invoice'])->name('customer_invoice');
+
+    Route::get('/customer/review/view', [CustomerReviewController::class, 'index'])->name('customer_review_view');
+
+    Route::get('/customer/review/add/{id}', [CustomerReviewController::class, 'add'])->name('customer_review_add');
 });
 
 
