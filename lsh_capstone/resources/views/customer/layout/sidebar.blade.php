@@ -15,7 +15,7 @@
 
             <li class="{{ Request::is('customer/order/view') ? 'active' : '' }}"><a class="nav-link" href="{{ route('customer_order_view') }}"><i class="fa fa-list-alt"></i> <span>Orders</span></a></li>
 
-            <li class="{{ Request::is('customer/review/view') ? 'active' : '' }}"><a class="nav-link" href="{{ route('customer_review_view') }}"><i class="fa fa-list-alt"></i> <span>Reviews</span></a></li>
+            <li class="{{ Request::is('customer/review/view') ? 'active' : '' }}"><a class="nav-link" href="{{ route('customer_review_view') }}"><i class="fa fa-star"></i> <span>Reviews</span></a></li>
 
             <li class="{{ Request::is('customer/edit-profile') ? 'active' : '' }}"><a class="nav-link" href="{{ route('customer_profile') }}"><i class="fa fa-user"></i> <span>Edit Profile</span></a></li>
 
