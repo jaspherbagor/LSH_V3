@@ -22,7 +22,7 @@
                                     @foreach($rates as $row)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $accommodation->name }}</td>
+                                        <td>{{ $row->accommodation_id }}</td>
                                         <td>{{ $row->rate }}</td>
                                         <td>{{ $row->heading }}</td>
                                         <td class="pt_10 pb_10">

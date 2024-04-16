@@ -12,10 +12,8 @@ class CustomerReviewController extends Controller
 {
     public function index()
     {
-        $rates = AccommodationRate::get();
+        $rates = AccommodationRate::where('customer_id', Auth::guard('customer')->user()->id)->get();
 
-        $accommodation = Accommodation::where('id', $rates->accommodation_id)->first();
-
-        return view('customer.rate_view', compact('rates', 'accommodation'));
+        return view('customer.review_view', compact('rates'));
     }
 }
