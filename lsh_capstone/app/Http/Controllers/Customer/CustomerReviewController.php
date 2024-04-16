@@ -16,4 +16,9 @@ class CustomerReviewController extends Controller
 
         return view('customer.review_view', compact('rates'));
     }
+
+    public function  add($id)
+    {
+        return view('customer.review_add');
+    }
 }
