@@ -29,8 +29,8 @@
                                         <td>{{ $row->booking_date }}</td>
                                         <td>{{ $row->paid_amount }}</td>
                                         <td class="pt_10 pb_10">
-                                            <a href="{{ route('customer_invoice',$row->id) }}" class="btn btn-info mb-md-0 mb-1" data-toggle="tooltip" data-placement="top" title="Receipt"><i class="fa fa-sticky-note-o" aria-hidden="true"></i></a>
-                                            <a href="" class="btn btn-success mb-md-0 mb-1">Rate Now</a>
+                                            <a href="{{ route('customer_invoice',$row->id) }}" class="btn btn-info mb-md-0 mb-1" data-toggle="tooltip" data-placement="top" title="Invoice"><i class="fa fa-sticky-note-o" aria-hidden="true"></i></a>
+                                            <a href="" class="btn btn-primary mb-md-0 mb-1" data-toggle="tooltip" data-placement="top" title="Rate Now"><i class="fa fa-star-half-o" aria-hidden="true"></i></a>
                                         </td>
                                         
                                     </tr>
