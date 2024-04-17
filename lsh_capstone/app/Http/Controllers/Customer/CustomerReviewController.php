@@ -42,4 +42,10 @@ class CustomerReviewController extends Controller
         return redirect()->back()->with('success', 'Review for accommodation has been submitted successfully!');
     }
 
+    public function review_edit($id)
+    {
+        $review_data = AccommodationRate::where('accommodation_id', $id)->first();
+        return view('customer.review_edit', compact('review_data'));
+    }
+
 }

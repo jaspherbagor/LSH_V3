@@ -128,6 +128,8 @@ Route::group(['middleware' => ['customer:customer']], function() {
     Route::get('/customer/review/add/{id}', [CustomerReviewController::class, 'add_review'])->name('customer_review_add');
 
     Route::post('/customer/review/submit/{id}', [CustomerReviewController::class, 'review_store'])->name('customer_review_submit');
+
+    Route::get('/customer/review/edit/{id}', [CustomerReviewController::class, 'review_edit'])->name('customer_review_edit');
 });
 
 
