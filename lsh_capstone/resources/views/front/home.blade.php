@@ -156,9 +156,9 @@
                             </p>
                             <div class="price">
                                 @if($accommodation_type->name != 'Hotel')
-                                ₱{{ $item->price }} per month
+                                ₱{{ number_format($item->price, 2) }} per month
                                 @else
-                                ₱{{ $item->price }} per night
+                                ₱{{ number_format($item->price, 2) }} per night
                                 @endif
                             </div>
                             <div class="button">
