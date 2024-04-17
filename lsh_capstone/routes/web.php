@@ -190,6 +190,7 @@ Route::group(['middleware' => ['admin:admin']], function() {
 
     Route::get('/admin/rates/view', [AdminReviewController::class, 'index'])->name('admin_review_view');
 
+    Route::get('/admin/rates/delete/{id}', [AdminReviewController::class, 'delete'])->name('admin_review_delete');
 
 
     Route::get('/admin/accommodation-type/view', [AdminAccommodationTypeController::class, 'index'])->name('admin_accommodation_type_view');
