@@ -1,6 +1,6 @@
 @extends('admin.layout.app')
 
-@section('heading', 'Order Invoice')
+@section('heading', 'Booking Invoice')
 
 @section('main_content')
 <div class="section-body">
@@ -43,13 +43,14 @@
 
             <div class="row mt-4">
                 <div class="col-md-12">
-                    <div class="section-title">Order Summary</div>
+                    <div class="section-title">Booking Summary</div>
                     <p class="section-lead">Room information given below in detail:</p>
                     <hr class="invoice-above-table">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-md">
                             <tr>
                                 <th>SL</th>
+                                <th>Accommodation Name</th>
                                 <th>Room Name</th>
                                 <th class="text-center">Checkin Date</th>
                                 <th class="text-center">Checkout date</th>
@@ -61,10 +62,12 @@
                             @foreach($order_detail as $item)
                             @php
                             $room_data = \App\Models\Room::where('id',$item->room_id)->first();
+                            $accommodation_data = \App\Models\Accommodation::where('id', $room_data->accommodation_id)->first();
                             @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $room_data->name }}</td>
+                                <td>{{ $accommodation_data->name }}</td>
+                                <td>{{ $room_data->room_name }}</td>
                                 <td class="text-center">{{ $item->checkin_date }}</td>
                                 <td class="text-center">{{ $item->checkout_date }}</td>
                                 <td class="text-center">{{ $item->adult }}</td>
