@@ -48,4 +48,18 @@ class CustomerReviewController extends Controller
         return view('customer.review_edit', compact('review_data'));
     }
 
+    public function review_update(Request $request, $id)
+    {
+        $review_data = AccommodationRate::where('accommodation_id', $id)->first();
+
+        $review_data->rate = $request->rate;
+        $review_data->review_heading = $request->review_heading;
+        $review_data->review_description = $request->review_description;
+        $review_data->update();
+
+        return redirect()->back()->with('success', 'Review has been successfully updated!');
+    }
+
+    
+
 }
