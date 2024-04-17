@@ -60,6 +60,12 @@ class CustomerReviewController extends Controller
         return redirect()->back()->with('success', 'Review has been successfully updated!');
     }
 
-    
+    public function review_delete($id)
+    {
+        $review_data = AccommodationRate::where('id', $id)->first();
+        $review_data->delete();
+
+        return redirect()->back()->with('success', 'Review has been successfully deleted!');
+    }
 
 }
