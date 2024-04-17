@@ -26,7 +26,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $row->order_no }}</td>
                                         <td>{{ $row->payment_method }}</td>
-                                        <td>{{ $row->booking_date }}</td>
+                                        <td>{{ \Carbon\Carbon::createFromFormat('d/m/Y', $row->booking_date)->format('F d, Y') }}</td>
                                         <td>₱{{ number_format($row->paid_amount, 2) }}</td>
                                         <td class="pt_10 pb_10">
                                             <a href="{{ route('admin_invoice',$row->id) }}" class="btn btn-primary mb-1" data-toggle="tooltip" data-placement="top" title="Detail">
