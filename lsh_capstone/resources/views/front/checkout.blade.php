@@ -184,7 +184,7 @@
                                         <td>
                                             {{ $room_data->room_name }}
                                             <br>
-                                            ({{ $arr_cart_checkin_date[$i] }} - {{ $arr_cart_checkout_date[$i] }})
+                                            ({{ \Carbon\Carbon::createFromFormat('d/m/Y', $arr_cart_checkin_date[$i])->format('F d, Y') }} - {{ \Carbon\Carbon::createFromFormat('d/m/Y', $arr_cart_checkout_date[$i])->format('F d, Y') }})
                                             <br>
                                             Adult: {{ $arr_cart_adult[$i] }}, Children: {{ $arr_cart_children[$i] }}
                                         </td>
@@ -207,7 +207,7 @@
                                 @endphp                                
                                 <tr>
                                     <td><b>Total:</b></td>
-                                    <td class="p_price"><b>₱{{ $total_price }}</b></td>
+                                    <td class="p_price"><b>₱{{ number_format($total_price, 2) }}</b></td>
                                 </tr>
                             </tbody>
                         </table>
