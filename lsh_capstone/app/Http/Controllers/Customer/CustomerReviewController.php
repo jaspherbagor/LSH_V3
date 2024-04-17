@@ -25,7 +25,21 @@ class CustomerReviewController extends Controller
 
     public function review_store(Request $request, $id)
     {
-        dd($request);
+        $request->validate([
+            'review_heading' => 'required',
+            'rate' => 'required',
+            'review_description' => 'required'
+        ]);
+
+        $review_data = new AccommodationRate();
+        $review_data->customer_id = Auth::guard('customer')->user()->id;
+        $review_data->accommodation_id = $id;
+        $review_data->rate = $request->rate;
+        $review_data->review_heading = $request->review_heading;
+        $review_data->review_description = $request->review_description;
+        $review_data->save();
+
+        return redirect()->back()->with('success', 'Review for accommodation has been submitted successfully!');
     }
 
 }
