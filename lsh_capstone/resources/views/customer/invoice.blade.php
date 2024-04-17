@@ -36,7 +36,7 @@
                         <div class="col-md-4 text-md-right">
                             <address>
                                 <strong>Invoice Date</strong><br>
-                                {{ $order->booking_date }}
+                                {{ \Carbon\Carbon::createFromFormat('d/m/Y', $order->booking_date)->format('F d, Y') }}
                             </address>
                         </div>
                     </div>
@@ -52,6 +52,7 @@
                         <table class="table table-striped table-hover table-md">
                             <tr>
                                 <th>SL</th>
+                                <th>Accommodation Name</th>
                                 <th>Room Name</th>
                                 <th class="text-center">Checkin Date</th>
                                 <th class="text-center">Checkout date</th>
@@ -63,12 +64,14 @@
                             @foreach($order_detail as $item)
                             @php
                             $room_data = \App\Models\Room::where('id',$item->room_id)->first();
+                            $accommodation_data = \App\Models\Accommodation::where('id', $room_data->accommodation_id)->first();
                             @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $accommodation_data->name }}</td>
                                 <td>{{ $room_data->room_name }}</td>
-                                <td class="text-center">{{ $item->checkin_date }}</td>
-                                <td class="text-center">{{ $item->checkout_date }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::createFromFormat('d/m/Y', $item->checkin_date)->format('F d, Y') }}</td>
+                                <td class="text-center">{{ \Carbon\Carbon::createFromFormat('d/m/Y', $item->checkout_date)->format('F d, Y') }}</td>
                                 <td class="text-center">{{ $item->adult }}</td>
                                 <td class="text-center">{{ $item->children }}</td>
                                 <td class="text-right">
