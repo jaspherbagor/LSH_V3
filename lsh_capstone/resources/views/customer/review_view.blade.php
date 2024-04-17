@@ -22,7 +22,7 @@
                                 <tbody>
                                     @foreach($rates as $row)
                                     @php 
-                                    $accommodation = \App\Models\Accommodation::where('id', $row->id)->first();
+                                    $accommodation = \App\Models\Accommodation::where('id', $row->accommodation_id)->first();
                                     @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
