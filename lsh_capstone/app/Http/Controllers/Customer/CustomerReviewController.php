@@ -17,8 +17,15 @@ class CustomerReviewController extends Controller
         return view('customer.review_view', compact('rates'));
     }
 
-    public function  add($id)
+    public function  add_review($id)
     {
-        return view('customer.review_add');
+        $accommodation = Accommodation::where('id', $id)->first();
+        return view('customer.review_add', compact('accommodation'));
     }
+
+    public function review_store(Request $request, $id)
+    {
+        dd($request);
+    }
+
 }

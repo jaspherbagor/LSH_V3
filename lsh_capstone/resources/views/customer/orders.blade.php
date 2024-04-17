@@ -22,6 +22,12 @@
                                 </thead>
                                 <tbody>
                                     @foreach($orders as $row)
+
+                                    @php
+                                    $order_detail = \App\Models\OrderDetail::where('order_no', $row->order_no)->first();
+                                    $room = \App\Models\Room::where('id', $order_detail->room_id)->first();
+                                    $accommodation = \App\Models\Accommodation::where('id', $room->accommodation_id)->first(); 
+                                    @endphp
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $row->order_no }}</td>
@@ -30,7 +36,7 @@
                                         <td>{{ $row->paid_amount }}</td>
                                         <td class="pt_10 pb_10">
                                             <a href="{{ route('customer_invoice',$row->id) }}" class="btn btn-info mb-md-0 mb-1" data-toggle="tooltip" data-placement="top" title="Invoice"><i class="fa fa-sticky-note-o" aria-hidden="true"></i></a>
-                                            <a href="{{ route('customer_review_add', $row->id) }}" class="btn btn-success mb-md-0 mb-1" data-toggle="tooltip" data-placement="top" title="Rate Now"><i class="fa fa-star" aria-hidden="true"></i></a>
+                                            <a href="{{ route('customer_review_add', $accommodation->id) }}" class="btn btn-success mb-md-0 mb-1" data-toggle="tooltip" data-placement="top" title="Rate Now"><i class="fa fa-star" aria-hidden="true"></i></a>
                                         </td>
                                         
                                     </tr>

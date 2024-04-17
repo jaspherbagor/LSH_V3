@@ -1,6 +1,6 @@
 @extends('customer.layout.app')
 
-@section('heading', 'Add Review')
+@section('heading', 'Add Review for '.$accommodation->name)
 
 @section('right_top_button')
 <a href="{{ route('customer_review_view') }}" class="btn btn-primary"><i class="fa fa-eye"></i> View All</a>
@@ -12,13 +12,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form action="{{ route('customer_review_submit', $accommodation->id) }}" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="mb-4">
                                     <label class="form-label">Heading *</label>
-                                    <input type="text" class="form-control" name="review_heading" value={{ old('review_heading') }}>
+                                    <input type="text" class="form-control" name="review_heading" value="{{ old('review_heading') }}">
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Rate *</label>
