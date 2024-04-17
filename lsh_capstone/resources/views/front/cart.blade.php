@@ -96,8 +96,8 @@
                                     @else
                                     <td>₱{{ number_format($room_data->price, 2) }}/Night</td>
                                     @endif
-                                    <td>{{ $arr_cart_checkin_date[$i] }}</td>
-                                    <td>{{ $arr_cart_checkout_date[$i] }}</td>
+                                    <td>{{ \Carbon\Carbon::createFromFormat('d/m/Y', $arr_cart_checkin_date[$i])->format('F d, Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::createFromFormat('d/m/Y', $arr_cart_checkout_date[$i])->format('F d, Y') }}</td>
                                     <td>
                                         Adult: {{ $arr_cart_adult[$i] }}<br>
                                         Children: {{ $arr_cart_children[$i] }}
