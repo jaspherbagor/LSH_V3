@@ -75,7 +75,7 @@
                 <div class="stripe mt_20">
                     <h4>Pay with Cards</h4>
                     <p>Accepted Cards: </p>
-                    <ol class="text-success">
+                    <ol>
                         <li>American Express</li>
                         <li>China UnionPay (CUP)</li>
                         <li>Discover & Diners Club</li>
@@ -110,28 +110,28 @@
                 <div class="inner">
                     <h4 class="mb_10">Billing Info</h4>
                     <div>
-                        Name: <span class="text-success">{{ session()->get('billing_name') }}</span>
+                        Name: <span class="fw-bold">{{ session()->get('billing_name') }}</span>
                     </div>
                     <div>
-                        Email: <span class="text-success">{{ session()->get('billing_email') }}</span>
+                        Email: <span class="fw-bold">{{ session()->get('billing_email') }}</span>
                     </div>
                     <div>
-                        Phone: <span class="text-success">{{ session()->get('billing_phone') }}</span>
+                        Phone: <span class="fw-bold">{{ session()->get('billing_phone') }}</span>
                     </div>
                     <div>
-                        Country: <span class="text-success">{{ session()->get('billing_country') }}</span>
+                        Country: <span class="fw-bold">{{ session()->get('billing_country') }}</span>
                     </div>
                     <div>
-                        Address: <span class="text-success">{{ session()->get('billing_address') }}</span>
+                        Address: <span class="fw-bold">{{ session()->get('billing_address') }}</span>
                     </div>
                     <div>
-                        City: <span class="texxt-success">{{ session()->get('billing_city') }}</span>
+                        City: <span class="fw-bold">{{ session()->get('billing_city') }}</span>
                     </div>
                     <div>
-                        Province: <span class="text-success">{{ session()->get('billing_province') }}</span>
+                        Province: <span class="fw-bold">{{ session()->get('billing_province') }}</span>
                     </div>
                     <div>
-                        Zip: <span class="text-success">{{ session()->get('billing_zip') }}</span>
+                        Zip: <span class="fw-bold">{{ session()->get('billing_zip') }}</span>
                     </div>
                 </div>
             </div>
@@ -181,6 +181,8 @@
                                 for($i=0;$i<count($arr_cart_room_id);$i++)
                                 {
                                     $room_data = DB::table('rooms')->where('id',$arr_cart_room_id[$i])->first();
+                                    $accommodation = DB::table('accommodations')->where('id', $room_data->accommodation_id)->first();
+                                    $accommodation_type = DB::table('accommodation_types')->where('id', $accommodation->accommodation_type_id)->first();
                                     @endphp
 
                                     <tr>
@@ -200,12 +202,19 @@
                                                 $t1 = strtotime($d1_new);
                                                 $t2 = strtotime($d2_new);
                                                 $diff = ($t2-$t1)/60/60/24;
-                                                echo '₱'.number_format($room_data->price*$diff, 2);
+
+                                                if($accommodation_type->name != 'Hotel') {
+                                                    $daily_price = $room_data->price / 30;
+                                                    $subtotal = $daily_price * $diff;
+                                                } else {
+                                                    $subtotal = $room_data->price*$diff;
+                                                }
+                                                echo '₱'.number_format($subtotal, 2);
                                             @endphp
                                         </td>
                                     </tr>
                                     @php
-                                    $total_price = $total_price+($room_data->price*$diff);
+                                    $total_price = $total_price+($subtotal);
                                 }
                                 @endphp                                
                                 <tr>
