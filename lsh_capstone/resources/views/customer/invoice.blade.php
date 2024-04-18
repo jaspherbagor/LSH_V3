@@ -65,6 +65,7 @@
                             @php
                             $room_data = \App\Models\Room::where('id',$item->room_id)->first();
                             $accommodation_data = \App\Models\Accommodation::where('id', $room_data->accommodation_id)->first();
+                            $accommodation_type_data = \App\Models\AccommodationType::where('id', $accommodation_data->accommodation_type_id)->first();
                             @endphp
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
@@ -83,8 +84,14 @@
                                         $t1 = strtotime($d1_new);
                                         $t2 = strtotime($d2_new);
                                         $diff = ($t2-$t1)/60/60/24;
-                                        $sub = $room_data->price*$diff;
-                                        echo '₱'.number_format($room_data->price*$diff, 2);
+                                        if($accommodation_type_data->name != 'Hotel') {
+                                            $daily_price = $room_data->price / 30;
+                                            $subtotal = $daily_price * $diff;
+                                        } else {
+                                            $subtotal = $room_data->price*$diff;
+                                        }
+                                        $sub = $subtotal;
+                                        echo '₱'.number_format($sub, 2);
                                     @endphp
                                 </td>
                             </tr>
