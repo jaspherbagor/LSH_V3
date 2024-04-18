@@ -14,6 +14,12 @@ class AdminLoginController extends Controller
 {
     public function index()
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin_home');
+        } elseif (Auth::guard('customer')->check()) {
+            Auth::guard('customer')->logout();
+            return redirect()->route('customer_logout');
+        }
         
         return view('admin.login');
     }
@@ -42,7 +48,7 @@ class AdminLoginController extends Controller
 
         $resetLink = url('admin/reset-password/'.$token.'/'.$request->email);
         $subject = 'Reset Password';
-        $message = 'I hope this message finds you well. You are reaching out to request a password reset for your account. Please assist by following the reset process. Kindly click on the following link to reset your password: ';
+        $message = 'Please assist by following the reset process. Kindly click on the following link to reset your password: ';
         $message .= '<a href="'.$resetLink.'">Click Here</a>';
 
         Mail::to($request->email)->send(new WebsiteMail($subject,$message));
