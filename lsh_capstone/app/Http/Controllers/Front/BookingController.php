@@ -328,7 +328,7 @@ class BookingController extends Controller
                 $subtotal = $r_info->price*$diff;
             }
             $sub = $subtotal;
-
+            $message .= '<br><strong>Accommodation Name</strong>: '.$accommodation->name;
             $message .= '<br><strong>Room Name</strong>: '.$r_info->room_name;
             if($accommodation_type->name != 'Hotel') {
                 $message .= '<br><strong>Price Per Month</strong>: ₱'.number_format($r_info->price, 2);
