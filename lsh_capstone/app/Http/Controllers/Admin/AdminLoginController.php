@@ -26,11 +26,18 @@ class AdminLoginController extends Controller
 
     public function forgetPassword()
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin_home');
+        }
         return view('admin.forget_password');
     }
 
     public function forgetPasswordSubmit(Request $request)
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin_home');
+        }
+
         $request->validate([
             'email' => 'required|email'
         ]);
@@ -58,6 +65,10 @@ class AdminLoginController extends Controller
 
     public function loginSubmit(Request $request)
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin_home');
+        }
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -83,6 +94,10 @@ class AdminLoginController extends Controller
 
     public function resetPassword($token, $email)
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin_home');
+        }
+
         $admin_data = Admin::where('token', $token)->where('email', $email)->first();
         if(!$admin_data) {
             return redirect()->route('admin_login');
@@ -95,6 +110,10 @@ class AdminLoginController extends Controller
 
     public function resetPasswordSubmit(Request $request) 
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin_home');
+        }
+        
         $request->validate([
             'password' => 'required',
             'confirm_password' => 'required|same:password'
