@@ -12,13 +12,32 @@ use App\Models\Customer;
 
 class CustomerAuthController extends Controller
 {
+    public function index()
+    {
+        if (Auth::guard('customer')->check()) {
+            return redirect()->route('customer_home');
+        } elseif (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();
+            return redirect()->route('admin_logout');
+        }
+
+        return view('front.login');
+    }
+
     public function login()
     {
+        if (Auth::guard('customer')->check()) {
+            return redirect()->route('customer_home');
+        }
         return view('front.login');
     }
 
     public function login_submit(Request $request)
     {
+        if (Auth::guard('customer')->check()) {
+            return redirect()->route('customer_home');
+        }
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -39,11 +58,19 @@ class CustomerAuthController extends Controller
 
     public function signup()
     {
+        if (Auth::guard('customer')->check()) {
+            return redirect()->route('customer_home');
+        }
+
         return view('front.signup');
     }
 
     public function signup_submit(Request $request)
     {
+        if (Auth::guard('customer')->check()) {
+            return redirect()->route('customer_home');
+        }
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:customers',
@@ -84,6 +111,10 @@ class CustomerAuthController extends Controller
 
     public function signup_verify($email,$token)
     {
+        if (Auth::guard('customer')->check()) {
+            return redirect()->route('customer_home');
+        }
+
         $customer_data = Customer::where('email',$email)->where('token',$token)->first();
 
         if($customer_data) {
@@ -112,6 +143,10 @@ class CustomerAuthController extends Controller
 
     public function forget_password_submit(Request $request)
     {
+        if (Auth::guard('customer')->check()) {
+            return redirect()->route('customer_home');
+        }
+
         $request->validate([
             'email' => 'required|email'
         ]);
@@ -140,6 +175,10 @@ class CustomerAuthController extends Controller
 
     public function reset_password($token,$email)
     {
+        if (Auth::guard('customer')->check()) {
+            return redirect()->route('customer_home');
+        }
+
         $customer_data = Customer::where('token',$token)->where('email',$email)->first();
         if(!$customer_data) {
             return redirect()->route('customer_login');
@@ -151,6 +190,10 @@ class CustomerAuthController extends Controller
 
     public function reset_password_submit(Request $request)
     {
+        if (Auth::guard('customer')->check()) {
+            return redirect()->route('customer_home');
+        }
+
         $request->validate([
             'password' => 'required',
             'retype_password' => 'required|same:password'
