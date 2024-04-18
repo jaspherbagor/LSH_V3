@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use App\Mail\WebsiteMail;
+use App\Models\Accommodation;
+use App\Models\AccommodationType;
 use App\Models\BookedRoom;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -252,6 +254,8 @@ class BookingController extends Controller
         for($i=0;$i<count($arr_cart_room_id);$i++)
         {
             $r_info = Room::where('id',$arr_cart_room_id[$i])->first();
+            $accommodation = Accommodation::where('id', $r_info->accommodation_id)->first();
+            $accommodation_type = AccommodationType::where('id', $accommodation->accommodation_type_id)->first();
             $d1 = explode('/',$arr_cart_checkin_date[$i]);
             $d2 = explode('/',$arr_cart_checkout_date[$i]);
             $d1_new = $d1[2].'-'.$d1[1].'-'.$d1[0];
@@ -259,7 +263,13 @@ class BookingController extends Controller
             $t1 = strtotime($d1_new);
             $t2 = strtotime($d2_new);
             $diff = ($t2-$t1)/60/60/24;
-            $sub = $r_info->price*$diff;
+            if($accommodation_type->name != 'Hotel') {
+                $daily_price = $r_info->price / 30;
+                $subtotal = $daily_price * $diff;
+            } else {
+                $subtotal = $r_info->price*$diff;
+            }
+            $sub = $subtotal;
 
             $obj = new OrderDetail();
             $obj->order_id = $ai_id;
@@ -290,22 +300,44 @@ class BookingController extends Controller
 
         $subject = 'Thank You for Your Booking with Labason Safe Haven';
         $message = '<p>Dear <strong>'.Auth::guard('customer')->user()->name. '</strong>,</p>';
-        $message .= '<p>Thank you for choosing Labason Safe Haven for your upcoming stay. We appreciate your trust in us and are excited to welcome you to our establishment. The booking information is given below: </p>';
+        $message .= '<p>Thank you for choosing <strong>Labason Safe Haven</strong> for your upcoming stay. We appreciate your trust in us and are excited to welcome you to our establishment. The booking information is given below: </p>';
 
         $message .= '<strong>Order No</strong>: '.$order_no;
         $message .= '<br><strong>Transaction Id</strong>: '.$transaction_id;
         $message .= '<br><strong>Payment Method</strong>: Stripe';
         $message .= '<br><strong>Paid Amount</strong>: ₱'.number_format($final_price, 2);
-        $message .= '<br><strong>Booking Date</strong>: '.date('d/m/Y').'<br>';
+        $message .= '<br><strong>Booking Date</strong>: '.\Carbon\Carbon::createFromFormat('d/m/Y', date('d/m/Y'))->format('F d, Y').'<br>';
 
         for($i=0;$i<count($arr_cart_room_id);$i++) {
 
             $r_info = Room::where('id',$arr_cart_room_id[$i])->first();
+            $accommodation = Accommodation::where('id', $r_info->accommodation_id)->first();
+            $accommodation_type = AccommodationType::where('id', $accommodation->accommodation_type_id)->first();
+
+            $d1 = explode('/',$arr_cart_checkin_date[$i]);
+            $d2 = explode('/',$arr_cart_checkout_date[$i]);
+            $d1_new = $d1[2].'-'.$d1[1].'-'.$d1[0];
+            $d2_new = $d2[2].'-'.$d2[1].'-'.$d2[0];
+            $t1 = strtotime($d1_new);
+            $t2 = strtotime($d2_new);
+            $diff = ($t2-$t1)/60/60/24;
+            if($accommodation_type->name != 'Hotel') {
+                $daily_price = $r_info->price / 30;
+                $subtotal = $daily_price * $diff;
+            } else {
+                $subtotal = $r_info->price*$diff;
+            }
+            $sub = $subtotal;
 
             $message .= '<br><strong>Room Name</strong>: '.$r_info->room_name;
-            $message .= '<br><strong>Price Per Night</strong>: ₱'.number_format($r_info->price, 2);
-            $message .= '<br><strong>Checkin Date</strong>: '.$arr_cart_checkin_date[$i];
-            $message .= '<br><strong>Checkout Date</strong>: '.$arr_cart_checkout_date[$i];
+            if($accommodation_type->name != 'Hotel') {
+                $message .= '<br><strong>Price Per Month</strong>: ₱'.number_format($r_info->price, 2);
+            } else {
+                $message .= '<br><strong>Price Per Night</strong>: ₱'.number_format($r_info->price, 2);
+            }
+            $message .= '<br><strong>Subtotal</strong>: ₱'.number_format($sub, 2);
+            $message .= '<br><strong>Checkin Date</strong>: '.\Carbon\Carbon::createFromFormat('d/m/Y', $arr_cart_checkin_date[$i])->format('F d, Y');
+            $message .= '<br><strong>Checkout Date</strong>: '.\Carbon\Carbon::createFromFormat('d/m/Y', $arr_cart_checkout_date[$i])->format('F d, Y');
             $message .= '<br><strong>Adult</strong>: '.$arr_cart_adult[$i];
             $message .= '<br><strong>Children</strong>: '.$arr_cart_children[$i].'<br>';
         }            

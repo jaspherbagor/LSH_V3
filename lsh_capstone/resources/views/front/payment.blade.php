@@ -54,7 +54,9 @@
                 $total_price = 0;
                 for($i=0;$i<count($arr_cart_room_id);$i++)
                 {
-                    $room_data = DB::table('rooms')->where('id',$arr_cart_room_id[$i])->first();                            
+                    $room_data = DB::table('rooms')->where('id',$arr_cart_room_id[$i])->first();
+                    $accommodation = DB::table('accommodations')->where('id', $room_data->accommodation_id)->first();
+                    $accommodation_type = DB::table('accommodation_types')->where('id', $accommodation->accommodation_type_id)->first();                            
                     $d1 = explode('/',$arr_cart_checkin_date[$i]);
                     $d2 = explode('/',$arr_cart_checkout_date[$i]);
                     $d1_new = $d1[2].'-'.$d1[1].'-'.$d1[0];
@@ -62,7 +64,13 @@
                     $t1 = strtotime($d1_new);
                     $t2 = strtotime($d2_new);
                     $diff = ($t2-$t1)/60/60/24;
-                    $total_price = $total_price+($room_data->price*$diff);
+                    if($accommodation_type->name != 'Hotel') {
+                        $daily_price = $room_data->price / 30;
+                        $subtotal = $daily_price * $diff;
+                    } else {
+                        $subtotal = $room_data->price*$diff;
+                    }
+                    $total_price = $total_price+($subtotal);
                 }
                 @endphp
                         
