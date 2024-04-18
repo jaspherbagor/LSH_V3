@@ -27,11 +27,11 @@
                                 <th>Serial</th>
                                 <th>Photo</th>
                                 <th>Room Info</th>
-                                @php
+                                {{-- @php
                                 $room = \App\Models\Room::where('id', session()->get('cart_room_id'))->first();
                                 $accommodation = \App\Models\Accommodation::where('id', $room->accommodation_id)->first();
                                 $accommodation_type = \App\Models\AccommodationType::where('id', $accommodation->accommodation_type_id)->first();
-                                @endphp
+                                @endphp --}}
                                 <th>Price</th>
                                 <th>Checkin</th>
                                 <th>Checkout</th>
@@ -81,6 +81,8 @@
                             for($i=0;$i<count($arr_cart_room_id);$i++)
                             {
                                 $room_data = DB::table('rooms')->where('id',$arr_cart_room_id[$i])->first();
+                                $accommodation = DB::table('accommodations')->where('id', $room_data->accommodation_id)->first();
+                                $accommodation_type = DB::table('accommodation_types')->where('id', $accommodation->accommodation_type_id)->first();
                                 @endphp
                                 <tr>
                                     <td>
@@ -91,11 +93,13 @@
                                     <td>
                                         <a href="{{ route('room_detail',$room_data->id) }}" class="room-name">{{ $room_data->room_name }}</a>
                                     </td>
+
                                     @if($accommodation_type->name != 'Hotel')
                                     <td>₱{{ number_format($room_data->price, 2) }}/Month</td>
                                     @else
                                     <td>₱{{ number_format($room_data->price, 2) }}/Night</td>
                                     @endif
+
                                     <td>{{ \Carbon\Carbon::createFromFormat('d/m/Y', $arr_cart_checkin_date[$i])->format('F d, Y') }}</td>
                                     <td>{{ \Carbon\Carbon::createFromFormat('d/m/Y', $arr_cart_checkout_date[$i])->format('F d, Y') }}</td>
                                     <td>
@@ -111,12 +115,22 @@
                                         $t1 = strtotime($d1_new);
                                         $t2 = strtotime($d2_new);
                                         $diff = ($t2-$t1)/60/60/24;
-                                        echo '₱'.number_format($room_data->price*$diff, 2);
+
+                                        if($accommodation_type->name != 'Hotel') {
+                                            $daily_price = $room_data->price / 30;
+                                            $subtotal = $daily_price * $diff;
+                                        } else {
+                                            $subtotal = $room_data->price*$diff;
+                                        }
+
+
+                                        echo '₱'.number_format($subtotal, 2);
                                     @endphp
                                     </td>
                                 </tr>
                                 @php
-                                $total_price = $total_price+($room_data->price*$diff);
+
+                                $total_price = $total_price+($subtotal);
                             }
                             @endphp                            
                             <tr>
