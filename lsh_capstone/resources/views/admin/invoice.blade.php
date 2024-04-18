@@ -2,6 +2,10 @@
 
 @section('heading', 'Booking Invoice')
 
+@section('right_top_button')
+<a href="{{ route('admin_order_view') }}" class="btn btn-primary"><i class="fa fa-eye"></i> View All</a>
+@endsection
+
 @section('main_content')
 <div class="section-body">
     <div class="invoice">
