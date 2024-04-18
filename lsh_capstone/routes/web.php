@@ -90,28 +90,47 @@ Route::post('/payment', [BookingController::class, 'payment'])->name('payment');
 Route::post('/payment/stripe/{price}', [BookingController::class, 'stripe'])->name('stripe');
 
 
-/* Customer Routes */
-Route::get('/login', [CustomerAuthController::class, 'login'])->name('customer_login')->middleware('CheckAuth');
 
-Route::post('/login-submit', [CustomerAuthController::class, 'login_submit'])->name('customer_login_submit');
+/* Guest Middleware */
+Route::middleware('guest')->group(function () {
+    /* Customer Routes */
+    Route::get('/login', [CustomerAuthController::class, 'login'])->name('customer_login');
 
-Route::get('/customer/logout', [CustomerAuthController::class, 'logout'])->name('customer_logout');
+    Route::post('/login-submit', [CustomerAuthController::class, 'login_submit'])->name('customer_login_submit');
 
-Route::get('/signup', [CustomerAuthController::class, 'signup'])->name('customer_signup');
+    Route::get('/customer/logout', [CustomerAuthController::class, 'logout'])->name('customer_logout');
 
-Route::post('/signup-submit', [CustomerAuthController::class, 'signup_submit'])->name('customer_signup_submit');
+    Route::get('/signup', [CustomerAuthController::class, 'signup'])->name('customer_signup');
 
-Route::get('/signup-verify/{email}/{token}', [CustomerAuthController::class, 'signup_verify'])->name('customer_signup_verify');
+    Route::post('/signup-submit', [CustomerAuthController::class, 'signup_submit'])->name('customer_signup_submit');
 
-Route::get('/forget-password', [CustomerAuthController::class, 'forget_password'])->name('customer_forget_password');
+    Route::get('/signup-verify/{email}/{token}', [CustomerAuthController::class, 'signup_verify'])->name('customer_signup_verify');
 
-Route::post('/forget-password-submit', [CustomerAuthController::class, 'forget_password_submit'])->name('customer_forget_password_submit');
+    Route::get('/forget-password', [CustomerAuthController::class, 'forget_password'])->name('customer_forget_password');
 
-Route::get('/reset-password/{token}/{email}', [CustomerAuthController::class, 'reset_password'])->name('customer_reset_password');
+    Route::post('/forget-password-submit', [CustomerAuthController::class, 'forget_password_submit'])->name('customer_forget_password_submit');
 
-Route::post('/reset-password-submit', [CustomerAuthController::class, 'reset_password_submit'])->name('customer_reset_password_submit');
+    Route::get('/reset-password/{token}/{email}', [CustomerAuthController::class, 'reset_password'])->name('customer_reset_password');
+
+    Route::post('/reset-password-submit', [CustomerAuthController::class, 'reset_password_submit'])->name('customer_reset_password_submit');
 
 
+    /* Admin Routes */
+    Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin_login');
+
+    Route::get('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin_logout');
+
+    Route::post('/admin/login-submit', [AdminLoginController::class, 'loginSubmit'])->name('admin_login_submit');
+
+    Route::get('/admin/forget-password', [AdminLoginController::class, 'forgetPassword'])->name('admin_forget_password');
+
+    Route::post('/admin/forget-password-submit', [AdminLoginController::class, 'forgetPasswordSubmit'])->name('admin_forget_password_submit');
+
+    Route::get('/admin/reset-password/{token}/{email}', [AdminLoginController::class, 'resetPassword'])->name('admin_reset_password');
+
+    Route::post('/admin/reset-password-submit', [AdminLoginController::class, 'resetPasswordSubmit'])->name('admin_reset_password_submit');
+
+});
 
 
 
@@ -136,23 +155,6 @@ Route::group(['middleware' => ['customer:customer']], function() {
     Route::get('/customer/review/delete/{id}', [CustomerReviewController::class, 'review_delete'])->name('customer_review_delete');
 
 });
-
-
-
-/* Admin Routes */
-Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin_login');
-
-Route::get('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin_logout');
-
-Route::post('/admin/login-submit', [AdminLoginController::class, 'loginSubmit'])->name('admin_login_submit');
-
-Route::get('/admin/forget-password', [AdminLoginController::class, 'forgetPassword'])->name('admin_forget_password');
-
-Route::post('/admin/forget-password-submit', [AdminLoginController::class, 'forgetPasswordSubmit'])->name('admin_forget_password_submit');
-
-Route::get('/admin/reset-password/{token}/{email}', [AdminLoginController::class, 'resetPassword'])->name('admin_reset_password');
-
-Route::post('/admin/reset-password-submit', [AdminLoginController::class, 'resetPasswordSubmit'])->name('admin_reset_password_submit');
 
 
 
