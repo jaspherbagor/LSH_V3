@@ -39,6 +39,7 @@ use App\Http\Controllers\Front\RoomController;
 use App\Http\Controllers\Front\SubscriberController;
 use App\Http\Controllers\Front\TermsController;
 use App\Http\Controllers\Front\VideoController;
+use App\Http\Middleware\CheckAuth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -114,7 +115,6 @@ Route::middleware('guest')->group(function () {
 
     Route::post('/reset-password-submit', [CustomerAuthController::class, 'reset_password_submit'])->name('customer_reset_password_submit');
 
-
     /* Admin Routes */
     Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin_login');
 
@@ -131,7 +131,6 @@ Route::middleware('guest')->group(function () {
     Route::post('/admin/reset-password-submit', [AdminLoginController::class, 'resetPasswordSubmit'])->name('admin_reset_password_submit');
 
 });
-
 
 
 /* Customer Routes with Customer Middleware */
